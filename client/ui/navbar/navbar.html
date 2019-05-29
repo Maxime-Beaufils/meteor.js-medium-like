@@ -1,0 +1,50 @@
+<template name="navbar"> 
+    <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/"><strong>Medium-like</strong></a>
+          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item" href="/">
+              Home
+            </a>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                {{#unless loggingIn}}
+                  {{#if currentUser}}
+                  <p>Bonjour &nbsp;{{currentUser.profile.fullname}} &nbsp; </p>
+                  <a class="button is-danger js-logout"> Déconnexion </a>
+                  {{else}}
+                  <a class="button is-light js-open-login-modal"> Connexion </a>
+                  {{/if}}
+                {{/unless}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+</template>
+
+<template name="login_modal">
+  <div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title has-text-centered">Sign in</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          {{> atForm}}
+        </section>
+      </div>
+  </div>
+</template>

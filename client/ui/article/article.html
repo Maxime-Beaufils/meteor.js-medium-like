@@ -1,0 +1,84 @@
+<template name="article_page">
+    <div class="card" style="margin: 20px;padding-bottom: 25px">
+        <header class="card-header is-block">
+          <p class="card-header-title is-2 is-centered"> {{article.title}} </p>
+          <p class="has-text-centered" style="padding-bottom: 10px ">auteur: {{getFullNameFromOwnerId article.ownerId}} créé le {{getDisplayDateTime article.createAt}}</p>
+        </header>
+        <div class="card-content">
+          <div class="content">
+              <p style="white-space: pre-line">{{article.content}}</p>
+          </div>
+          <div class="is-pulled-right">
+            <a href="/article/{{article._id}}/edit" class="button is-success is-outlined">Modifier</a>
+          </div>
+        </div>
+      </div>
+</template>
+
+<template name="article_create_form">
+  <div class="column is-two-thirds is-offset-one-fifth" style="margin-top: 10%">
+    <div class="card" style="padding-bottom: 25px">
+      <header class="card-header">
+        <p class="card-header-title is-centered">
+          Formulaire de création d'article
+        </p>
+      </header>
+      <form class="js-create-article">
+        <div class="card-content">
+          <div class="content">
+              <input class="input" type="text" placeholder="Titre" name="title">
+              <textarea class="textarea" placeholder="Votre article ..." rows="10" style="margin-top: 10px" name="content"></textarea>
+          </div>
+          <div class="is-pulled-right">
+            <button type="button" class="button is-danger is-outlined">Annuler</button>
+            <button type="submit" class="button is-success is-outlined">Publier</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<template name="article_edit_form">
+    <div class="column is-two-thirds is-offset-one-fifth" style="margin-top: 10%">
+        <div class="card" style="padding-bottom: 25px">
+          <header class="card-header">
+            <p class="card-header-title is-centered">Modifier un article</p>
+          </header>
+          <form class="js-edit-article">
+            <div class="card-content">
+              <div class="content">
+                  <input class="input" type="text" placeholder="Titre" name="title" value="{{article.title}}">
+                  <textarea class="textarea" placeholder="Votre article ..." rows="10" 
+                  style="margin-top: 10px" name="content">{{article.content}}</textarea>
+              </div>
+              <div class="is-pulled-left">
+                  <button type="button" class="button is-danger is-outlined js-delete-article">Supprimer</button>
+              </div>
+              <div class="is-pulled-right">
+                <a href="/article/{{article._id}}" class="button is-dark is-outlined">Annuler</a>
+                <button type="submit" class="button is-success is-outlined">Modifier</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+</template>
+
+<template name="article_list">
+  <h3 class="title is-3 has-text-centered" style="margin: 20px">La liste des articles</h3>
+  {{#each article in articles}}
+    {{> article_single article=article}}  
+  {{else}}
+      <h5 class="has-text-centered">Aucun article publié</h5>
+  {{/each}}
+</template>
+
+<template name="article_single">
+    <div class="card">
+        <header class="card-header">
+          <p class="card-header-title is-centered"> <a href="/article/{{article._id}}">{{article.title}} </a></p>
+        </header>
+          <p class="has-text-centered" style="padding: 12px">auteur: {{getFullNameFromOwnerId article.ownerId}} créé le {{ getDisplayDateTime article.createAt}}</p>
+      </div>
+</template>

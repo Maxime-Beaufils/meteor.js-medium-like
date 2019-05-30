@@ -11,16 +11,14 @@
         </div>
         <div id="navbarBasicExample" class="navbar-menu">
           <div class="navbar-start">
-            <a class="navbar-item" href="/">
-              Home
-            </a>
+            <a class="navbar-item js-goto-create-article"> Publier un article</a>
           </div>
           <div class="navbar-end">
             <div class="navbar-item">
               <div class="buttons">
                 {{#unless loggingIn}}
                   {{#if currentUser}}
-                  <p>Bonjour &nbsp;{{currentUser.profile.fullname}} &nbsp; </p>
+                  <p> &nbsp; {{currentUser.profile.fullname}} &nbsp; </p>
                   <a class="button is-danger js-logout"> Déconnexion </a>
                   {{else}}
                   <a class="button is-light js-open-login-modal"> Connexion </a>

@@ -1,0 +1,37 @@
+<template name="comment_form">
+  <div class="column is-two-thirds is-offset-one-fifth">
+    <div class="card" style="padding-bottom: 25px">
+      <form class="js-create-comment">
+        <div class="card-content">
+          <div class="content">
+              <label class="label">Laissez un commentaire</label>
+              <input class="input is-rounded" type="text" placeholder="Commentaire" name="content">
+          </div>
+          <div class="is-pulled-right">
+            <button type="submit" class="button">Commenter</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<template name="comment_list">
+  {{#each comment in comments}}
+    {{> comment_single comment=comment}}
+  {{/each}}
+
+</template>
+
+<template name="comment_single">
+  <div class="column is-two-thirds is-offset-one-fifth">
+    <div class="card">
+        <div class="card-content">
+          <div class="content">
+              <label class="label">{{getFullNameFromOwnerId comment.ownerId}}</label>
+              <p>{{ comment.content }}</p>
+          </div>
+        </div>
+    </div>
+  </div>
+</template>

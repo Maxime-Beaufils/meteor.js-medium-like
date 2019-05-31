@@ -12,7 +12,11 @@
             <a href="/article/{{article._id}}/edit" class="button is-success is-outlined">Modifier</a>
           </div>
         </div>
-      </div>
+    </div>
+    <div>
+      {{> comment_form}}
+      {{> comment_list}}
+    </div>
 </template>
 
 <template name="article_create_form">

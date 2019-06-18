@@ -9,14 +9,14 @@ Template.article_create_form.events({
     const title = event.target.title.value;
     const content = event.target.content.value;
 
-    let articleDoc = {
-      title: title,
-      content: content,
-      createAt: new Date(),
-      ownerId: Meteor.userId()
-    }
+    // let articleDoc = {
+    //   title: title,
+    //   content: content,
+    //   createAt: new Date(),
+    //   ownerId: Meteor.userId()
+    // }
 
-    Articles.insert(articleDoc);
+    // Articles.insert(articleDoc);
     event.target.title.value = "";
     event.target.content.value = "";
   }
@@ -43,7 +43,7 @@ Template.article_edit_form.events({
 
 Template.article_list.helpers({
   articles(){
-    return Articles.find().fetch();
+    return Articles.find({}, {sort:{createAt: -1}}).fetch();
   }
 });
 

@@ -6,17 +6,18 @@ Template.comment_form.events({
   "submit .js-create-comment"(event, instance){
     event.preventDefault();
 
+    if(!Meteor.userId()){
+      document.querySelector('.modal').classList.add('is-active');
+      return;
+    }
+
     const content = event.target.content.value
 
-    let commentDoc = {
-      content: content,
-      articleId: FlowRouter.getParam('articleId'),
-      createdAt: new Date(),
-      ownerId: Meteor.userId()
-    }
-    Comments.insert(commentDoc);
-
-    event.target.content.value = "";
+    Meteor.call("insertComment", {content: content, articleId: FlowRouter.getParam('articleId')}, function(err, res){
+      if(!err){
+        event.target.content.value = "";
+      }
+    });
   }
 });
 

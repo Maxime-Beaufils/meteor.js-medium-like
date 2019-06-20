@@ -1,23 +1,61 @@
-import {Articles, Comments } from './collections';
+import {Articles, Comments, articleUpsertSchema } from './collections';
+import { check } from 'meteor/check';
 
 Meteor.methods({
-  insertArticle(title, content){
+  insertArticle(article){
+
+    articleUpsertSchema.validate(article);
+
+    if(!this.userId){
+      throw new Meteor.Error("pas connecté")
+    }
     let articleDoc = {
-      title: title,
-      content: content,
+      title: article.title,
+      content: article.content,
       createAt: new Date(),
       ownerId: this.userId
     }
-
-    Articles.insert(articleDoc);
+    return Articles.insert(articleDoc);
   },
-  updateArticle(){
+  updateArticle(article){
 
+    articleUpsertSchema.validate(article);
+
+    if(!this.userId){
+      throw new Meteor.Error("pas connecté")
+    }
+    let articleFound = Articles.findOne({_id: article.id});
+    if(articleFound.ownerId !== this.userId){
+      throw new Meteor.Error("unauthorize", "l'utilisateur doit être l'auteur de l'article pour l'éditer");
+    }
+    Articles.update({_id: article.id},{$set: {title: article.title, content: article.content}});
   },
-  removeArticle(){
-
+  removeArticle(articleId){
+    check(articleId, String);
+    if(!this.userId){
+      throw new Meteor.Error("pas connecté")
+    }
+    let articleFound = Articles.findOne({_id: articleId});
+    if(articleFound.ownerId !== this.userId){
+      throw new Meteor.Error("unauthorize", "l'utilisateur doit être l'auteur de l'article pour le supprimer");
+    }
+    Articles.remove({_id: articleId});
   },
-  insertComment(){
+  insertComment(comment){
 
+    check(comment, {
+      content: String,
+      articleId: String
+    });
+    if(!this.userId){
+      throw new Meteor.Error("pas connecté")
+    }
+    let commentDoc = {
+      content: comment.content,
+      articleId: comment.articleId,
+      createdAt: new Date(),
+      ownerId: this.userId
+    }
+    Comments.insert(commentDoc);
   }
 })

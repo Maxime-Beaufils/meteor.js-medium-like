@@ -9,16 +9,14 @@ Template.article_create_form.events({
     const title = event.target.title.value;
     const content = event.target.content.value;
 
-    // let articleDoc = {
-    //   title: title,
-    //   content: content,
-    //   createAt: new Date(),
-    //   ownerId: Meteor.userId()
-    // }
+    Meteor.call('insertArticle', { title: title, content: content}, function(err,res){
+      if(!err){
+        event.target.title.value = "";
+        event.target.content.value = "";
+      }
+      FlowRouter.go("/article/:articleId", {articleId: res});
+    });
 
-    // Articles.insert(articleDoc);
-    event.target.title.value = "";
-    event.target.content.value = "";
   }
 });
 
@@ -29,14 +27,17 @@ Template.article_edit_form.events({
     const title = event.target.title.value;
     const content = event.target.content.value;
 
-    Articles.update({_id: FlowRouter.getParam("articleId")},{$set: {title: title, content: content}});
+    Meteor.call('updateArticle', {id: FlowRouter.getParam("articleId"), title: title, content: content}, function(err, res){
+      if(!err){
+        FlowRouter.go("/article/:articleId", {articleId: FlowRouter.getParam("articleId")});
+      }
+    });
 
-    FlowRouter.go("/article/:articleId", {articleId: FlowRouter.getParam("articleId")});
   },
   "click .js-delete-article"(event, instance){
-    Articles.remove({_id: FlowRouter.getParam("articleId")});
-
-    FlowRouter.go('/')
+    Meteor.call('removeArticle', FlowRouter.getParam("articleId"), function(err, res){
+      if(!err) FlowRouter.go('/');
+    });
   }
 })
 

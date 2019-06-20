@@ -9,7 +9,9 @@
               <p style="white-space: pre-line">{{article.content}}</p>
           </div>
           <div class="is-pulled-right">
+            {{#if equals article.ownerId currentUser._id}}
             <a href="/article/{{article._id}}/edit" class="button is-success is-outlined">Modifier</a>
+            {{/if}}
           </div>
         </div>
     </div>
@@ -34,7 +36,7 @@
               <textarea class="textarea" placeholder="Votre article ..." rows="10" style="margin-top: 10px" name="content"></textarea>
           </div>
           <div class="is-pulled-right">
-            <button type="button" class="button is-danger is-outlined">Annuler</button>
+            <a href="/" class="button is-danger is-outlined">Annuler</a>
             <button type="submit" class="button is-success is-outlined">Publier</button>
           </div>
         </div>

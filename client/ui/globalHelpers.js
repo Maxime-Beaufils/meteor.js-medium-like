@@ -2,7 +2,7 @@ import moment from "moment";
 
 Template.registerHelper('getDisplayDateTime', function(date){
   return moment(date).format("DD/MM/YYYY à HH:mm");
-})
+});
 
 Template.registerHelper('getFullNameFromOwnerId', function(ownerId){
   let user =  Meteor.users.findOne({_id: ownerId});
@@ -11,4 +11,8 @@ Template.registerHelper('getFullNameFromOwnerId', function(ownerId){
   }else{
     return "anonymus"
   }
-})
+});
+
+Template.registerHelper('equals', function(a,b){
+  return a === b;
+});

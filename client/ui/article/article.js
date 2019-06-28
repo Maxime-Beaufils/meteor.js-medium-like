@@ -41,6 +41,9 @@ Template.article_edit_form.events({
   }
 })
 
+Template.article_list.onCreated(function(){
+  this.subscribe('articles.list');
+});
 
 Template.article_list.helpers({
   articles(){
@@ -48,12 +51,18 @@ Template.article_list.helpers({
   }
 });
 
+Template.article_page.onCreated(function(){
+  this.subscribe('article.single', FlowRouter.getParam("articleId"));
+})
 Template.article_page.helpers({
   article(){
     return Articles.findOne({_id: FlowRouter.getParam("articleId")})
   }
 })
 
+Template.article_edit_form.onCreated(function(){
+  this.subscribe('article.single', FlowRouter.getParam("articleId"));
+});
 Template.article_edit_form.helpers({
   article(){
     return Articles.findOne({_id: FlowRouter.getParam("articleId")})
